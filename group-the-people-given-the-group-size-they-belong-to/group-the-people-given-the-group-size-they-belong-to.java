@@ -1,36 +1,23 @@
 class Solution {
     public List<List<Integer>> groupThePeople(int[] groupSizes) {
-        List<List<Integer>> answer = new LinkedList<>();
+        List<List<Integer>> answer = new ArrayList<>();
         int n = groupSizes.length;
+        ArrayList<Integer>[] groups = new ArrayList[n + 1];
+
+        for(int i = 1; i <= n; i++){
+            groups[i] = new ArrayList<>();
+        }
         
-        //그룹사이즈를 key로 갖고 값을 personId의 리스트를 value로 갖는 HashMap 세팅
-        HashMap<Integer, LinkedList<Integer>> hashMap = new HashMap<>();
-        for(int personId = 0; personId < n; personId++){
-            int groupSize = groupSizes[personId];
+        for(int i = 0; i < n; i++){
+            int size = groupSizes[i];
+            groups[size].add(i);
             
-            if(!hashMap.containsKey(groupSize)){
-                hashMap.put(groupSize, new LinkedList<Integer>());
-            }
-            
-            LinkedList<Integer> linkedList = hashMap.get(groupSize);
-            linkedList.add(personId);
-        }
-
-        //그룹사이즈별 그룹화
-        for(int key: hashMap.keySet()){
-            // ArrayList<Integer> groupList = new ArrayList<>();
-            LinkedList<Integer> linkedList = hashMap.get(key);
-            LinkedList<Integer> splitGroup = new LinkedList<>();
-
-            for(int i = 0; i < linkedList.size(); i++){
-                splitGroup.add(linkedList.get(i));
-                
-                if(splitGroup.size() == key){
-                    answer.add(splitGroup);
-                    splitGroup = new LinkedList<Integer>();
-                }
+            if(groups[size].size() == size){
+                answer.add(groups[size]);
+                groups[size] = new ArrayList<>();
             }
         }
+
         return answer;
     }
 }

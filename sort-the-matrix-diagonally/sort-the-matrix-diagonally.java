@@ -28,22 +28,16 @@ class Solution {
         for(int[] begin: begins){
             int r = begin[0];
             int c = begin[1];
-            ArrayList<Integer> diagonal = new ArrayList<>();
+            int len = Math.min(m - r - 1, n - c - 1) + 1;
+            int[] diagonal = new int[len];
 
-            while(isInside(r, c, m, n)){
-                diagonal.add(mat[r][c]);
-                r += 1;
-                c += 1;
+            for(int i = 0; i < len; i++){
+                diagonal[i] = mat[r + i][c + i];
             }
             // 대각선 정렬
-            Collections.sort(diagonal);
-            r = begin[0];
-            c = begin[1];
-            
-            for(Integer num : diagonal){
-                answer[r][c] = num;
-                r += 1;
-                c += 1;
+            Arrays.sort(diagonal);
+            for(int i = 0; i < len; i++){
+                answer[r + i][c + i] = diagonal[i];
             }
         }
         
